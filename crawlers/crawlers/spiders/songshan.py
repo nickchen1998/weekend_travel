@@ -11,4 +11,5 @@ class SongshanSpider(scrapy.Spider):
 
     def parse(self, response, **kwargs):
         exhibition = ExhibitionItem()
+
         print(response.text)
