@@ -1,5 +1,4 @@
 import scrapy
-from scrapy.http import Request
 from bs4 import BeautifulSoup
 from crawlers.items import ExhibitionItem
 from pprint import pprint
@@ -39,7 +38,7 @@ class HuashanSpider(scrapy.Spider):
 
             yield scrapy.Request(url=exhibition["url"], meta=exhibition, callback=self.get_location)
 
-            print(exhibition)
+            # print(exhibition)
             # yield exhibition
 
         next_page = soup.find("div", class_="pagination").find_all("li")[-1]
@@ -65,8 +64,12 @@ class HuashanSpider(scrapy.Spider):
 
         for info in article_info:
             if info.find("h6").text == "活動地點":
-                exhibition["location"] = info.find("div", class_="address").text.replace("\n", "")
+                exhibition["location"] = "華山"
+                exhibition["location_detail"] = info.find("div", class_="address").text.replace("\n", "")
                 pprint(exhibition)
+
+        yield exhibition
 
 
 if __name__ == '__main__':
+    pass

@@ -18,6 +18,7 @@ class ExhibitionItem(scrapy.Item):
     name = scrapy.Field(serializer=str)
     category = scrapy.Field(serializer=str)
     location = scrapy.Field(serializer=str)
+    location_detail = scrapy.Field(serializer=str)
     start_time = scrapy.Field(serializer=datetime)
     end_time = scrapy.Field(serializer=datetime)
     url = scrapy.Field(serializer=str)

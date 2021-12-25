@@ -12,6 +12,7 @@ class ExhibitionItem(Base):
     name = Column(String(50))
     category = Column(String(50))
     location = Column(String(50))
+    location_detail = Column(String(50))
     start_time = Column(DATETIME)
     end_time = Column(DATETIME)
     url = Column(Text)

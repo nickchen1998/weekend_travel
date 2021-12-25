@@ -8,7 +8,7 @@
 from itemadapter import ItemAdapter
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from .orm_models import ExhibitionItem
+from crawlers.orm_models import ExhibitionItem
 
 
 class CrawlersPipeline:
