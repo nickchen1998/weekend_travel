@@ -1,6 +1,8 @@
 import scrapy
+from scrapy.http import Request
 from bs4 import BeautifulSoup
 from crawlers.items import ExhibitionItem
+from pprint import pprint
 
 
 class HuashanSpider(scrapy.Spider):
@@ -16,7 +18,6 @@ class HuashanSpider(scrapy.Spider):
             # print(item.find("div", class_="card-text-name").text)
             exhibition["name"] = item.find("div", class_="card-text-name").text
             exhibition["category"] = item.find("div", class_="event-list-type").text.replace("\n", "")
-            exhibition["location"] = None
 
             date = item.find("div", class_="event-date").text.split("-")
             start_time = date[0].replace(".", "-").replace("\n", "").replace(" ", "")
@@ -36,8 +37,10 @@ class HuashanSpider(scrapy.Spider):
             image_url = image_url.replace("background-image:url('", "").replace("')", "")
             exhibition["image_url"] = image_url
 
+            yield scrapy.Request(url=exhibition["url"], meta=exhibition, callback=self.get_location)
+
             print(exhibition)
-            yield exhibition
+            # yield exhibition
 
         next_page = soup.find("div", class_="pagination").find_all("li")[-1]
 
@@ -46,3 +49,24 @@ class HuashanSpider(scrapy.Spider):
             url = f"https://www.huashan1914.com{url}"
 
             yield scrapy.Request(url=url, callback=self.parse)
+
+    @staticmethod
+    def get_location(response):
+        exhibition = response.meta
+
+        del exhibition["depth"]
+        del exhibition["download_latency"]
+        del exhibition["download_slot"]
+        del exhibition["download_timeout"]
+
+        article_info = BeautifulSoup(response.text, "lxml").find("ul", class_="article-info-list")
+
+        article_info = article_info.find_all("li")
+
+        for info in article_info:
+            if info.find("h6").text == "活動地點":
+                exhibition["location"] = info.find("div", class_="address").text.replace("\n", "")
+                pprint(exhibition)
+
+
+if __name__ == '__main__':
