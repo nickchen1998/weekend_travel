@@ -2,9 +2,11 @@
 #
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+import random
+import time
 
 from scrapy import signals
-
+from abc import ABC, abstractmethod
 # useful for handling different item types with a single interface
 from itemadapter import is_item, ItemAdapter
 
@@ -101,3 +103,11 @@ class CrawlersDownloaderMiddleware:
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
+
+
+def sleep(x, y):
+    tmp = []
+    for i in range(x, y):
+        tmp.append(i)
+
+    time.sleep(random.choice(tmp))
