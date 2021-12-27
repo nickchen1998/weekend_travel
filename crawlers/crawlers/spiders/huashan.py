@@ -53,11 +53,6 @@ class HuashanSpider(scrapy.Spider):
     def get_location(response):
         exhibition = response.meta
 
-        del exhibition["depth"]
-        del exhibition["download_latency"]
-        del exhibition["download_slot"]
-        del exhibition["download_timeout"]
-
         article_info = BeautifulSoup(response.text, "lxml").find("ul", class_="article-info-list")
 
         article_info = article_info.find_all("li")

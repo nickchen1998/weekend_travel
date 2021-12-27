@@ -1,3 +1,5 @@
+import time
+
 import scrapy
 from bs4 import BeautifulSoup
 import json
@@ -22,6 +24,7 @@ class SongshanSpider(scrapy.Spider):
             item_id = item["ID"]
             url = f"https://www.songshanculturalpark.org/Exhibition.aspx?q=get&ID={item_id}"
             exhibition["url"] = url.replace("q=get", "")
+            time.sleep(3)
             yield scrapy.Request(url=url, meta=exhibition, callback=self.get_location)
 
         page = 1

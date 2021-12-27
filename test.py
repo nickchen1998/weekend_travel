@@ -6,3 +6,4 @@ res = requests.get(url)
 soup = BeautifulSoup(res.text, 'lxml')
 
 print(soup)
+

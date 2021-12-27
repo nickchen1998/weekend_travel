@@ -92,4 +92,4 @@ SELENIUM_DRIVER_EXECUTABLE_PATH = 'chromedriver.exe'  # 驅動程式路徑
 SELENIUM_DRIVER_ARGUMENTS = ['-headless']
 
 LOG_LEVEL = 'INFO'
-# LOG_ENABLED = False
+LOG_ENABLED = False

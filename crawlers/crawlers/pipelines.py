@@ -24,6 +24,15 @@ class CrawlersPipeline:
 
         result = session.query(ExhibitionItem).filter_by(name=item["name"]).all()
         if not result:
+            if item.get("depth"):
+                del item["depth"]
+            if item.get("download_latency"):
+                del item["download_latency"]
+            if item.get("download_slot"):
+                del item["download_slot"]
+            if item.get("download_timeout"):
+                del item["download_timeout"]
+
             session.add(ExhibitionItem(**item))
 
         session.commit()
